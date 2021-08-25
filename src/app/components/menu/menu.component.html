@@ -6,25 +6,33 @@
     </div>
     <div>
         <ul class="list-unstyled">
-            <li class="menu-item">
-                <div class="d-flex justify-content-center align-items-center" style="height: 40px;">
-                    <p style="margin: 0px;">Trang Chủ</p>
-                </div>
+            <li class="menu-item"  (click)="clickBtnClose()">
+                <a routerLink="/home">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 40px;">
+                        <p style="margin: 0px;">Trang Chủ</p>
+                    </div>
+                </a>
             </li>
             <li class="menu-item">
+                <a href="">
                 <div class="d-flex justify-content-center align-items-center" style="height: 40px;">
                     <p style="margin: 0px;">Thời Tiết Hôm Nay</p>
                 </div>
+                </a>
             </li>
             <li class="menu-item">
+                <a href="">
                 <div class="d-flex justify-content-center align-items-center" style="height: 40px;">
                     <p style="margin: 0px;">Dự Báo Thời Tiết 7 Ngày</p>
                 </div>
+                </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item" (click)="clickBtnClose()">
+                <a routerLink="/about">
                 <div class="d-flex justify-content-center align-items-center" style="height: 40px;">
                     <p style="margin: 0px;">Về Chúng Tôi</p>
                 </div>
+                </a>
             </li>
         </ul>
     </div>

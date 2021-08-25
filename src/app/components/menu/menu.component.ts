@@ -9,7 +9,6 @@ import { MenuService } from 'src/app/services/menu.service';
 export class MenuComponent implements OnInit {
   constructor(public menuService: MenuService) { }
   ngOnInit(): void {
-    console.log(this.menuService.isActive);
   }
   clickBtnClose = ()=>{
     this.menuService.closeMenu()
