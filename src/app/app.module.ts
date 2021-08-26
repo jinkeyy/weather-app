@@ -10,10 +10,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { WeatherDistrictComponent } from './components/weather-district/weather-district.component';
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'weather-district',
+    component: WeatherDistrictComponent
   },
   {
     path: 'about',
@@ -40,6 +45,7 @@ const routes: Routes = [
     HomeComponent,
     AboutComponent,
     NotFoundComponent,
+    WeatherDistrictComponent,
   ],
   imports: [
     BrowserModule,
