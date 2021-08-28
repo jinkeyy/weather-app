@@ -11,6 +11,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { WeatherDistrictComponent } from './components/weather-district/weather-district.component';
+import { WeatherService } from './services/weather.service';
+import { HttpClientModule } from '@angular/common/http';
 const routes: Routes = [
   {
     path: 'home',
@@ -49,10 +51,12 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   providers: [
-    MenuService
+    MenuService,
+    WeatherService,
   ],
   bootstrap: [AppComponent]
 })

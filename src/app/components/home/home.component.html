@@ -1,108 +1,70 @@
 <div class="row d-flex justify-content-center align-items-center" style="margin: 0px;">
     <div class="col d-flex justify-content-center align-items-center">
         <div style="margin: 0;margin-top: 35px;width: 80%;border-radius: 30px;box-shadow: 4px 3px 10px;overflow: auto;">
-            <div class="row  weather-now-wrapper" style="margin: 0px;height: 400px;">
+            <div class="row  weather-now-wrapper" style="margin: 0px;height: 400px;text-shadow: 1px 1px 4px var(--gray-dark)">
                 <div class="col-xl-6 d-flex justify-content-center align-items-center">
                     <div>
-                        <h3 style="color: var(--light);background: var(--cyan);border-radius: 9px;padding: 14px;">Hà Nội</h3>
+                        <h3 style="color: var(--light);background: var(--cyan);border-radius: 9px;padding: 14px;">Hà Nội
+                        </h3>
                     </div>
                 </div>
-                <div class="col-xl-6 d-flex justify-content-center align-items-center" style="padding: 0px;filter: blur(0px);">
+                <div class="col-xl-6 d-flex justify-content-center align-items-center"
+                    style="padding: 0px;filter: blur(0px);">
                     <div>
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <picture><img src="../../../assets/images/icon/icon_clear_sky_day.png" style="width: 100px;"></picture>
+                                <picture><img src="../../../assets/images/icon/{{dataWeather[0].weather[0].icon}}.png"
+                                        style="width: 100px;"></picture>
                             </div>
-                            <h3 class="d-flex justify-content-center align-items-center" style="font-size: 59px;color: var(--light);height: 100px;">27<span><br>°C<br><br></span></h3>
+                            &nbsp;
+                            <h3 class="d-flex justify-content-center align-items-center"
+                                style="font-size: 59px;color: var(--light);height: 100px;">
+                                {{mathRound(dataWeather[0].temp.day)}}<span><br>°C<br><br></span></h3>
                         </div>
-                        <p class="d-flex justify-content-center align-items-center" style="color: var(--light);">Nắng Nhiều</p>
-                        <div class="d-flex justify-content-between align-items-end">
-                            <p class="text-left" style="color: var(--light);">Độ Ẩm :&nbsp;<span>Text</span></p>
-                            <p class="text-right" style="color: var(--light);">Tốc Độ Gió:&nbsp;<span>Text</span></p>
+                        <p class="d-flex justify-content-center align-items-center" style="color: var(--light);">
+                            {{dataWeather[0].weather[0].description}}</p>
+                        <div class="d-flex justify-content-between align-items-end" style="padding: 15px;">
+                            <p class="text-left" style="color: var(--light);">Nhiệu độ thấp nhất
+                                :&nbsp;<span>{{mathRound(dataWeather[0].temp.min)}}</span>°C</p>
+                            &nbsp;&nbsp;&nbsp;
+                            <p class="text-right" style="color: var(--light);">Nhiệt độ cao nhất
+                                :&nbsp;<span>{{mathRound(dataWeather[0].temp.max)}}</span>°C</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end" style="padding: 15px;">
+                            <p class="text-left" style="color: var(--light);">Độ Ẩm
+                                :&nbsp;<span>{{dataWeather[0].humidity}}</span>%</p>
+                            <p class="text-right" style="color: var(--light);">Tốc Độ
+                                Gió:&nbsp;<span>{{dataWeather[0].wind_speed}}</span></p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row" style="border-right-color: var(--white);border-radius: 0px;border-bottom-right-radius: 30px;border-bottom-left-radius: 30px;box-shadow: 0px -6px 20px 0px var(--cyan);background: var(--cyan);color: var(--light);text-shadow: 1px 1px 4px var(--gray-dark);margin: 0px;">
+            <div class="row"
+                style="border-right-color: var(--white);border-radius: 0px;border-bottom-right-radius: 30px;border-bottom-left-radius: 30px;box-shadow: 0px -6px 20px 0px var(--cyan);background: var(--cyan);color: var(--light);text-shadow: 1px 1px 4px var(--gray-dark);margin: 0px;">
                 <div class="col-xl-8">
                     <div class="row" style="margin: 0px;">
-                        <div class="col-xl-2" style="padding: 15px;">
+                        <div class="col-xl-2 item-week-weather" style="padding: 15px;border-bottom: 2px solid"  *ngFor="let item of dataWeekWeather">
                             <div>
-                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">Ngày Mai</p>
+                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">
+                                    {{getWeekDays(item.dt)}}</p>
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div>
-                                        <picture><img src="../../../assets/images/icon/icon_shower_rain_day.png" style="width: 50px;"></picture>
+                                        <picture><img src="../../../assets/images/icon/{{item.weather[0].icon}}.png"
+                                                style="width: 50px;"></picture>
                                     </div>
-                                    <h3 class="d-flex justify-content-center align-items-center" style="height: 100px;font-size: 25px;">27<span><br>°C<br><br></span></h3>
+                                    <h3 class="d-flex justify-content-center align-items-center"
+                                        style="height: 100px;font-size: 25px;">{{mathRound(item.temp.day)}}<span><br>°C<br><br></span></h3>
                                 </div>
-                                <p class="d-flex justify-content-center align-items-center">Có Mưa&nbsp;</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2" style="padding: 15px;">
-                            <div>
-                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">Thứ 7</p>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div>
-                                        <picture><img src="../../../assets/images/icon/icon_rain_night.png" style="width: 50px;"></picture>
-                                    </div>
-                                    <h3 class="d-flex justify-content-center align-items-center" style="height: 100px;font-size: 25px;">27<span><br>°C<br><br></span></h3>
-                                </div>
-                                <p class="d-flex justify-content-center align-items-center">Mưa rào</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2" style="padding: 15px;">
-                            <div>
-                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">Chủ Nhật</p>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div>
-                                        <picture><img src="../../../assets/images/icon/icon_clear_sky_day.png" style="width: 50px;"></picture>
-                                    </div>
-                                    <h3 class="d-flex justify-content-center align-items-center" style="height: 100px;font-size: 25px;">29<span><br>°C<br><br></span></h3>
-                                </div>
-                                <p class="d-flex justify-content-center align-items-center">Nắng gắt</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2" style="padding: 15px;">
-                            <div>
-                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">Thứ 2</p>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div>
-                                        <picture><img src="../../../assets/images/icon/icon_shower_rain_day.png" style="width: 50px;"></picture>
-                                    </div>
-                                    <h3 class="d-flex justify-content-center align-items-center" style="height: 100px;font-size: 25px;">26<span><br>°C<br><br></span></h3>
-                                </div>
-                                <p class="d-flex justify-content-center align-items-center">Có Mưa&nbsp;</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2" style="padding: 15px;">
-                            <div>
-                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">Thứ 3</p>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div>
-                                        <picture><img src="../../../assets/images/icon/icon_scattered_clouds_night.png" style="width: 50px;"></picture>
-                                    </div>
-                                    <h3 class="d-flex justify-content-center align-items-center" style="height: 100px;font-size: 25px;">25<span><br>°C<br><br></span></h3>
-                                </div>
-                                <p class="d-flex justify-content-center align-items-center">Có Mưa&nbsp;</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2" style="padding: 15px;">
-                            <div>
-                                <p class="d-flex justify-content-center align-items-center" style="font-size: 15px;">Thứ 4</p>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div>
-                                        <picture><img src="../../../assets/images/icon/icon_shower_rain_day.png" style="width: 50px;"></picture>
-                                    </div>
-                                    <h3 class="d-flex justify-content-center align-items-center" style="height: 100px;font-size: 25px;">24<span><br>°C<br><br></span></h3>
-                                </div>
-                                <p class="d-flex justify-content-center align-items-center">Mưa Nhỏ&nbsp;</p>
+                                <p class="d-flex justify-content-center align-items-center">{{item.weather[0].description}}&nbsp;</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 d-flex justify-content-center align-items-center" style="padding: 0px;background: rgba(153,91,91,0);">
+                <div class="col-xl-4 d-flex justify-content-center align-items-center"
+                    style="padding: 0px;background: rgba(153,91,91,0);">
                     <div style="width: 5px;height: 100px;background: rgb(78,54,122);border-radius: 3px;"></div>
-                    <div style="border-left: 5px solid var(--purple);border-radius: 5px;width: calc( 100% - 2px);"></div>
+                    <div style="border-left: 5px solid var(--purple);border-radius: 5px;width: calc( 100% - 2px);">
+                    </div>
                 </div>
             </div>
         </div>

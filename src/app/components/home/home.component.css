@@ -2,3 +2,9 @@
     background-image: url(../../../assets/images/back/wallpapersden.com_gradient-calm-sunset_5282x2839.jpg);
     background-size: cover;
 }
+.item-week-weather{
+    transition: all 0.5s;
+}
+.item-week-weather:hover{
+    background-color: rgba(127, 255, 212, 0.5);
+}
