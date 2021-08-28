@@ -1,0 +1,6 @@
+.weather-app{
+    background-image: url(../images/99840.jpg);
+    height: 100vh;
+    background-size: cover;
+    padding: 0 !important;
+}
