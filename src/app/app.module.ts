@@ -13,6 +13,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { WeatherDistrictComponent } from './components/weather-district/weather-district.component';
 import { WeatherService } from './services/weather.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingService } from './services/loading.service';
 const routes: Routes = [
   {
     path: 'home',
@@ -25,6 +27,10 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
+  },
+  {
+    path: 'load',
+    component: LoadingComponent
   },
   {
     path: '',
@@ -48,6 +54,7 @@ const routes: Routes = [
     AboutComponent,
     NotFoundComponent,
     WeatherDistrictComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +64,7 @@ const routes: Routes = [
   providers: [
     MenuService,
     WeatherService,
+    LoadingService,
   ],
   bootstrap: [AppComponent]
 })
