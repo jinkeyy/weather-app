@@ -15,6 +15,10 @@ import { WeatherService } from './services/weather.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './services/loading.service';
+import { AdminComponent } from './components/admin/admin.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './auth.guard';
+import { AuthServiceService } from './services/auth-service.service';
 const routes: Routes = [
   {
     path: 'home',
@@ -29,8 +33,13 @@ const routes: Routes = [
     component: AboutComponent
   },
   {
-    path: 'load',
-    component: LoadingComponent
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '',
@@ -38,7 +47,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path:'**',
+    path: '**',
     component: NotFoundComponent,
   }
 
@@ -55,6 +64,8 @@ const routes: Routes = [
     NotFoundComponent,
     WeatherDistrictComponent,
     LoadingComponent,
+    AdminComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +76,7 @@ const routes: Routes = [
     MenuService,
     WeatherService,
     LoadingService,
+    AuthServiceService
   ],
   bootstrap: [AppComponent]
 })
