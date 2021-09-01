@@ -19,6 +19,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { AuthServiceService } from './services/auth-service.service';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: 'home',
@@ -70,7 +71,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [
     MenuService,

@@ -1,0 +1,64 @@
+canvas{
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+p{
+    font-weight: 700;
+}
+.component{
+    position: relative;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+.content .main{
+    text-align: center;
+}
+.content .main p[class=date]{
+    font-size: 1.5em;
+}
+.content .main p[class=temp]{
+    font-size: 8em;
+}
+.content .main small{
+    font-size: 0.25em;
+    font-weight: 700;
+}
+
+.form-control{
+    width: 200px;
+    margin: 20px 20px;
+    cursor: pointer;
+}
+
+.other{
+    display: flex;
+    width: 250px;
+    justify-content: space-between;
+    text-align: center;
+}
+.other .line{
+    content: "";
+    width: 1px;
+    height: 75px;
+    background-color: #000;
+}
+.other p[class=text]{
+    font-size: 1.2em;
+}
+.other p{
+    font-size: 1em;
+}
+
+.content .days{
+    display: flex;
+    text-align: center;
+    width: 600px;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
