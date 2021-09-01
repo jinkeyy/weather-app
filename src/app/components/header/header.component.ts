@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
       case 7:
         weekDays = "Thứ 7"
         break;
-      case 8:
+      case 1:
         weekDays = "Chủ Nhật"
         break;
       default:

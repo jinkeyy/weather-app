@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { LoadingService } from 'src/app/services/loading.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { WeatherService } from 'src/app/services/weather.service';
 
@@ -7,30 +8,35 @@ import { WeatherService } from 'src/app/services/weather.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit , AfterViewInit{
 
   dataWeather: any = []
   dataWeekWeather: any = []
   constructor(
     private menuService: MenuService,
-    private weatherService: WeatherService
-  ) { }
+    private weatherService: WeatherService,
+    private loadingService: LoadingService
+  ) {
+    this.loadingService.openLoading()
+  }
 
   ngOnInit(): void {
     this.getWeekWeatherData()
   }
   getWeekWeatherData = () => {
+    this.loadingService.openLoading()
     this.weatherService.getWeekWeek().subscribe((res: any) => {
       this.dataWeather = res.daily
-      for(let i = 1 ; i < 7; i++){
+      for (let i = 1; i < 7; i++) {
         this.dataWeekWeather.push(this.dataWeather[i])
       }
+      this.loadingService.closeLoading()
     })
   }
   getWeekDays = (dateGetTime: any) => {
     const date = new Date(dateGetTime * 1000)
     let weekDays
-    
+
     switch (date.getDay() + 1) {
       case 2:
         weekDays = "Thứ 2"
@@ -63,5 +69,8 @@ export class HomeComponent implements OnInit {
   }
   mathRound = (number: any) => {
     return Math.round(number)
+  }
+  ngAfterViewInit() {
+    this.loadingService.closeLoading()
   }
 }

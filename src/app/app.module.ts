@@ -13,6 +13,12 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { WeatherDistrictComponent } from './components/weather-district/weather-district.component';
 import { WeatherService } from './services/weather.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingService } from './services/loading.service';
+import { AdminComponent } from './components/admin/admin.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './auth.guard';
+import { AuthServiceService } from './services/auth-service.service';
 import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
@@ -28,12 +34,21 @@ const routes: Routes = [
     component: AboutComponent
   },
   {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
   {
-    path:'**',
+    path: '**',
     component: NotFoundComponent,
   }
 
@@ -49,6 +64,9 @@ const routes: Routes = [
     AboutComponent,
     NotFoundComponent,
     WeatherDistrictComponent,
+    LoadingComponent,
+    AdminComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +77,8 @@ const routes: Routes = [
   providers: [
     MenuService,
     WeatherService,
+    LoadingService,
+    AuthServiceService
   ],
   bootstrap: [AppComponent]
 })

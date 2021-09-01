@@ -1,0 +1,11 @@
+<div class="login-page">
+    <div class="form">
+      <form class="login-form">
+        <div style="margin-bottom: 25px;"><h5>Đăng nhập</h5></div>
+        <input #inputUser type="text" placeholder="username" (input)="updateUserName(inputUser)" />
+        <input #inputPass type="password" placeholder="password" (input)="updatePassword(inputPass)" />
+        <div style="color: red;"><p [innerHTML]="log"></p></div>
+        <button  (click)="login($event)">Đăng Nhập</button>
+      </form>
+    </div>
+  </div>
