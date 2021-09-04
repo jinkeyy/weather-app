@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
 
@@ -7,16 +8,24 @@ import { WeatherService } from 'src/app/services/weather.service';
   styleUrls: ['./weather-district.component.css']
 })
 export class WeatherDistrictComponent implements OnInit {
-  filter: any[]
-  selectedFilter: string
-  lat: any
-  lon: any
-  myDate = Date.now()
+  filter: any[] = []
+  selectedFilter: any
+  dataWeather: any = []
+  myDate: any = Date.now();
+  
 
-  constructor() {
+  constructor(private weatherApi: WeatherService, private http: HttpClient) {
+    this.init()
+  }
+
+  ngOnInit(): void {
+    this.getApi()
+  }
+
+  init(){
     this.filter = [
       { Code: 0, Name: "Ba Đình"},
-      { Code: 1, Name: "Cầu Giấy", lat: 21.012253, lon: 105.803464},
+      { Code: 1, Name: "Cầu Giấy"},
       { Code: 2, Name: "Đống Đa"},
       { Code: 3, Name: "Hai Bà Trưng"},
       { Code: 4, Name: "Hoàn Kiếm"},
@@ -47,18 +56,29 @@ export class WeatherDistrictComponent implements OnInit {
       { Code: 29, Name: "Ứng Hòa"},
     ]
     this.selectedFilter = "Cầu Giấy"
-    
   }
 
-  ngOnInit(): void {
-    this.init()
+  getApiUrl() {
+    return this.http.get(this.weatherApi.apiURL + "/data/2.5/onecall?lat=21.012260&lon=105.803457&appid=a5baaf83acd61ead8f2b525537740766&units=metric&lang=vi").pipe()
   }
 
+  getApi(){
+    this.getApiUrl().subscribe((data: any) => {
+      this.dataWeather = data.daily
+    })
+  }
+
+  showScore(value: any) {
+    return value.toFixed(1)
+  }
+  mathRound = (number: any) => {
+    return Math.round(number)
+  }
   changeFilter($event: any){
     console.log(this.selectedFilter)
   }
-
-  init(){
-
+  
+  getSvg() { 
+    
   }
 }

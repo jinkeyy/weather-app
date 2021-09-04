@@ -6,6 +6,7 @@ canvas{
 
 p{
     font-weight: 700;
+    margin-bottom: 0;
 }
 .component{
     position: relative;
@@ -58,7 +59,15 @@ p{
 .content .days{
     display: flex;
     text-align: center;
-    width: 600px;
+    width: 800px;
     justify-content: space-evenly;
     margin-top: 20px;
+}
+.content .days .maxmin{
+    display: flex;
+    justify-content: space-between;
+    width: 60px;
+}
+.content .days .maxmin p[class=min]{
+    opacity: 0.7;
 }
