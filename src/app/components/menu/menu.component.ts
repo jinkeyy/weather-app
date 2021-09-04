@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
@@ -7,8 +8,15 @@ import { MenuService } from 'src/app/services/menu.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  constructor(public menuService: MenuService) { }
+  checkLogin: boolean = false
+  constructor(
+    public menuService: MenuService,
+    public authService: AuthServiceService
+    ) { 
+       
+  }
   ngOnInit(): void {
+    this.checkLogin = this.authService.isAuthorized
   }
   clickBtnClose = ()=>{
     this.menuService.closeMenu()

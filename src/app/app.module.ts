@@ -20,6 +20,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { AuthServiceService } from './services/auth-service.service';
 import { FormsModule } from '@angular/forms';
+
 const routes: Routes = [
   {
     path: 'home',

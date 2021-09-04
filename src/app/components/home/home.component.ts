@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit , AfterViewInit{
     this.loadingService.openLoading()
     this.weatherService.getWeekWeek().subscribe((res: any) => {
       this.dataWeather = res.daily
+      console.log(res.daily);
+      
       for (let i = 1; i < 7; i++) {
         this.dataWeekWeather.push(this.dataWeather[i])
       }

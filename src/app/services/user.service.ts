@@ -10,10 +10,11 @@ export class UserService {
   constructor(private http: HttpClient) { }
   httpOptions = {
     headers: new HttpHeaders({
+      'Access-Control-Allow-Origin':'*',
       'Content-Type': 'application/json',
     })
   }
   loginUser(body: any) {
-    return this.http.post(this.apiURL + "/login", body, {withCredentials: true }).pipe()
+    return this.http.post(this.apiURL + "/login", body).pipe()
   }
 }

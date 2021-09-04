@@ -4,6 +4,10 @@ canvas{
     position: absolute;
 }
 
+#container{
+    height: 100vh !important;
+    width: 100vw !important;
+}
 p{
     font-weight: 700;
     margin-bottom: 0;
