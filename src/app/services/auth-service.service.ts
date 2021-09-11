@@ -13,7 +13,6 @@ export class AuthServiceService {
       this.username = localStorage.getItem('user')
       this.id = localStorage.getItem('id')
       this.login()
-      this.router.navigate(["/admin"])
     }
   }
   login = () => {

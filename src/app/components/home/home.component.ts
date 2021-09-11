@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { LoadingService } from 'src/app/services/loading.service';
 import { MenuService } from 'src/app/services/menu.service';
@@ -8,31 +10,45 @@ import { WeatherService } from 'src/app/services/weather.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit , AfterViewInit{
+export class HomeComponent implements OnInit, AfterViewInit {
 
   dataWeather: any = []
   dataWeekWeather: any = []
+  lat: number = 0
+  lon: number = 0
+  city: string = ""
   constructor(
     private menuService: MenuService,
     private weatherService: WeatherService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private http: HttpClient
   ) {
     this.loadingService.openLoading()
   }
 
   ngOnInit(): void {
     this.getWeekWeatherData()
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position.coords);
+        this.lat = position.coords.latitude
+        this.lon = position.coords.longitude
+        this.http.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.lat}&longitude=${this.lon}&localityLanguage=vi`).pipe().subscribe((res: any)=>{
+          this.city = res.locality +" - " +res.city
+        })
+      });
+    } else {
+      this.lat = 21.0245
+      this.lon = 105.8412
+      this.city= "Hà Nội"
+    }
   }
   getWeekWeatherData = () => {
-    this.loadingService.openLoading()
-    this.weatherService.getWeekWeek().subscribe((res: any) => {
+    this.weatherService.getWeekWeek(this.lat, this.lon).subscribe((res: any) => {
       this.dataWeather = res.daily
-      console.log(res.daily);
-      
       for (let i = 1; i < 7; i++) {
         this.dataWeekWeather.push(this.dataWeather[i])
       }
-      this.loadingService.closeLoading()
     })
   }
   getWeekDays = (dateGetTime: any) => {

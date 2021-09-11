@@ -11,7 +11,7 @@ export class WeatherService {
       'Content-Type': 'application/json'
     })
   }
-  getWeekWeek() {
-    return this.http.get(this.apiURL + "/data/2.5/onecall?lat=21.0245&lon=105.8412&exclude=current,minutely,hourly&appid=a5baaf83acd61ead8f2b525537740766&units=metric&lang=vi").pipe()
+  getWeekWeek(lat: any, lon: any) {
+    return this.http.get(this.apiURL + `/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=a5baaf83acd61ead8f2b525537740766&units=metric&lang=vi`).pipe()
   }
 }

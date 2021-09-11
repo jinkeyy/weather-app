@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { DistrictService } from 'src/app/services/district.service';
 import { ElementRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -14,8 +15,8 @@ export class AdminComponent implements OnInit {
   constructor(
     private ElementRef: ElementRef,
     private authService: AuthServiceService,
-    private districtService: DistrictService
-
+    private districtService: DistrictService,
+    private http: HttpClient
   ) { }
   modal: any
   data: any = []
@@ -34,8 +35,20 @@ export class AdminComponent implements OnInit {
 
     })
   }
+  changeDistrict = () => {
+    this.lat = 0
+    this.lon = 0
+    this.http.get(`http://api.openweathermap.org/geo/1.0/direct?appid=a5baaf83acd61ead8f2b525537740766&q=${this.districtName}`).pipe().subscribe((res: any) => {
+      if (res[0]) {
+        this.lat = res[0].lat
+        this.lon = res[0].lon
+    }
+    }, (error) => {
+    })
+  }
   create = (e: any) => {
     e.stopPropagation();
+
     const data = {
       districtname: this.districtName,
       lat: this.lat,
