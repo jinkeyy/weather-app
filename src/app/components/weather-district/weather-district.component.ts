@@ -1,84 +1,119 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
-
+import { DistrictService } from 'src/app/services/district.service';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-weather-district',
   templateUrl: './weather-district.component.html',
-  styleUrls: ['./weather-district.component.css']
+  styleUrls: ['./weather-district.component.css'],
 })
 export class WeatherDistrictComponent implements OnInit {
-  filter: any[] = []
-  selectedFilter: any
-  dataWeather: any = []
+  filter: any[] = [];
+  selectedFilter: any;
+  dataWeather: any = [];
   myDate: any = Date.now();
-  
+  listDistrict: any;
+  lat: any;
+  lon: any;
+  city: string = '';
 
-  constructor(private weatherApi: WeatherService, private http: HttpClient) {
-    this.init()
+  constructor(
+    private weatherApi: WeatherService,
+    private http: HttpClient,
+    private districtApi: DistrictService
+  ) {
+    this.init();
   }
 
   ngOnInit(): void {
-    this.getApi()
+    this.getApi();
+    this.getDistrict();
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position.coords);
+        this.lat = position.coords.latitude;
+        this.lon = position.coords.longitude;
+        this.http
+          .get(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.lat}&longitude=${this.lon}&localityLanguage=vi`
+          )
+          .pipe()
+          .subscribe((res: any) => {
+            this.selectedFilter = res.locality;
+          });
+      });
+    } else {
+      this.lat = 21.0245;
+      this.lon = 105.8412;
+      this.selectedFilter = 'Hà Nội';
+    }
   }
 
-  init(){
-    this.filter = [
-      { Code: 0, Name: "Ba Đình"},
-      { Code: 1, Name: "Cầu Giấy"},
-      { Code: 2, Name: "Đống Đa"},
-      { Code: 3, Name: "Hai Bà Trưng"},
-      { Code: 4, Name: "Hoàn Kiếm"},
-      { Code: 5, Name: "Hoàng Mai"},
-      { Code: 6, Name: "Hà Đông"},
-      { Code: 7, Name: "Long Biên"},
-      { Code: 8, Name: "Nam Từ Liêm"},
-      { Code: 9, Name: "Bắc Từ Liêm"},
-      { Code: 10, Name: "Tây Hồ"},
-      { Code: 11, Name: "Thanh Xuân"},
-      { Code: 12, Name: "Sơn Tây"},
-      { Code: 13, Name: "Ba Vì"},
-      { Code: 14, Name: "Chương Mỹ"},
-      { Code: 15, Name: "Đan Phượng"},
-      { Code: 16, Name: "Đông Anh"},
-      { Code: 17, Name: "Gia Lâm"},
-      { Code: 18, Name: "Hoài Đức"},
-      { Code: 19, Name: "Mê Linh"},
-      { Code: 20, Name: "Mỹ Đức"},
-      { Code: 21, Name: "Phú Xuyên"},
-      { Code: 22, Name: "Phúc Thọ"},
-      { Code: 23, Name: "Quốc Oai"},
-      { Code: 24, Name: "Sóc Sơn"},
-      { Code: 25, Name: "Thạch Thất"},
-      { Code: 26, Name: "Thanh Oai"},
-      { Code: 27, Name: "Thanh Trì"},
-      { Code: 28, Name: "Thường Tín"},
-      { Code: 29, Name: "Ứng Hòa"},
-    ]
-    this.selectedFilter = "Cầu Giấy"
+  init() {}
+
+  getDistrict() {
+    this.districtApi.read().subscribe((data: any) => {
+      this.listDistrict = data      
+    });
   }
 
   getApiUrl() {
-    return this.http.get(this.weatherApi.apiURL + "/data/2.5/onecall?lat=21.012260&lon=105.803457&appid=a5baaf83acd61ead8f2b525537740766&units=metric&lang=vi").pipe()
+    return this.http
+      .get(
+        this.weatherApi.apiURL +
+          '/data/2.5/onecall?lat=21.036238&lon=105.790581&exclude=current,minutely,hourly&appid=a5baaf83acd61ead8f2b525537740766&units=metric&lang=vi'
+      )
+      .pipe();
   }
 
-  getApi(){
+  getApi() {
     this.getApiUrl().subscribe((data: any) => {
-      this.dataWeather = data.daily
+      this.dataWeather = data.daily;
+    });
+  }
+
+  changeFilter(e: any) {
+    // var query = _.get(value, 'listDistrict._id')
+    // console.log(value, {
+    //   options: () => {return query}
+    // })
+
+    // console.log(query)
+
+    console.log(e.target.value);
+
+    this.http.get('https://weatherhnapi.herokuapp.com/district/' + e.target.value).pipe().subscribe((data: any) => {
+      this.selectedFilter = data.districtname
+      this.lat = data.lat
+      this.lon = data.lon
+      this.http.get(this.weatherApi.apiURL +`/data/2.5/onecall?lat=${this.lat}&lon=${this.lon}&exclude=current,minutely,hourly&appid=a5baaf83acd61ead8f2b525537740766&units=metric&lang=vi`).pipe().subscribe((data: any) => {
+        this.dataWeather = data.daily 
+      })
     })
+
+    // for (var i = 0; i <= this.listDistrict.length; i++){
+    //   this.lat = this.listDistrict[i].lat
+    //   this.lon = this.listDistrict[i].lon
+    //   console.log(this.lat)
+
+    // switch (i){
+    //   case 1:
+    //     this.lat = this.listDistrict[i].lat
+    //     this.lon = this.listDistrict[i].lon
+    //     console.log(this.lat)
+    //     break;
+    // }
+    // }
   }
 
   showScore(value: any) {
-    return value.toFixed(1)
+    return value.toFixed(1);
   }
   mathRound = (number: any) => {
-    return Math.round(number)
-  }
-  changeFilter($event: any){
-    console.log(this.selectedFilter)
-  }
-  
-  getSvg() { 
-    
-  }
+    return Math.round(number);
+  };
+
+  getSvg() {}
 }
